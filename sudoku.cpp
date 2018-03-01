@@ -21,16 +21,19 @@ SudokuBoard::SudokuBoard(){
 
 
 std::ostream& operator<<(std::ostream& os, const SudokuBoard& obj){
+    std::string output = "";
     for (const auto& inner: obj.board){
         for (const auto& item: inner){
-            std::cout << item << " ";
+            output += std::to_string(item) + " ";
         }
+        output += "\n";
     }
+    return os << output;
 }
 
 
 int main(){
     SudokuBoard sudoku;
-    std::cout << "Hi there" << std::endl;
+    std::cout << "Content of Sudoku board:" << std::endl;
     std::cout << sudoku << std::endl;
 }
