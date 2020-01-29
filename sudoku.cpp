@@ -23,6 +23,8 @@ class SudokuBoard{
         SudokuBoard(GridOfInts& board);
         SudokuBoard insert_first_row();
         SudokuBoard insert_first_row(RowOfInts& row);
+        SudokuBoard fill_board();
+        SudokuBoard fill_board(int row, int col, int val);
 
     friend std::ostream& operator<<(std::ostream& os, const SudokuBoard& obj);
 };
@@ -40,11 +42,20 @@ SudokuBoard SudokuBoard::insert_first_row(){
 
     return insert_first_row(row);
 }
+
 SudokuBoard SudokuBoard::insert_first_row(RowOfInts& row){
     auto new_board{board};
     new_board[0] = row;
 
     return SudokuBoard{new_board};
+}
+
+
+SudokuBoard SudokuBoard::fill_board(){
+    return *this;
+}
+SudokuBoard SudokuBoard::fill_board(int row, int col, int val){
+
 }
 
 
@@ -71,6 +82,6 @@ int main(){
 
     SudokuBoard board;
 
-    std::cout << board.insert_first_row();
+    std::cout << board.insert_first_row().fill_board();
 
 }
