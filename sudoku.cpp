@@ -37,7 +37,6 @@ SudokuBoard SudokuBoard::insert_first_row(){
         row.push_back(i+1);
     }
     std::shuffle(row.begin(), row.end(), rng);
-    std::cout << "hi";
 
     return insert_first_row(row);
 }
@@ -72,6 +71,6 @@ int main(){
 
     SudokuBoard board;
 
-    std::cout << board;
+    std::cout << board.insert_first_row();
 
 }
