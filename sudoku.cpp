@@ -175,10 +175,10 @@ int main()
     SudokuBoard board;
     board = board.insert_first_row().fill_board();
 
-    auto board2 = board.fill_board(1, 0);
+    auto solution = board.fill_board(1, 0);
 
-    if (board2.has_value())
+    if (solution.has_value())
     {
-        std::cout << board2.value();
+        std::cout << solution.value();
     }
 }
