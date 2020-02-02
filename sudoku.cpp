@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <chrono>
 #include <assert.h>
+#include <optional>
 
 #define ROWS 9
 #define COLUMNS 9
@@ -24,7 +25,7 @@ public:
     SudokuBoard insert_first_row(RowOfInts &row);
     SudokuBoard insert(int row, int col, int val);
     SudokuBoard fill_board();
-    SudokuBoard fill_board(int row, int col, int val);
+    std::optional<SudokuBoard> fill_board(int row, int col);
     bool is_valid(int row, int col);
 
     friend std::ostream &operator<<(std::ostream &os, const SudokuBoard &obj);
@@ -34,6 +35,7 @@ private:
 };
 
 SudokuBoard::SudokuBoard() : board(GridOfInts{9, RowOfInts(9, 0)}){};
+
 SudokuBoard::SudokuBoard(GridOfInts &board) : board{board}
 {
 }
@@ -63,9 +65,39 @@ SudokuBoard SudokuBoard::fill_board()
     return SudokuBoard(*this);
 }
 
-SudokuBoard SudokuBoard::fill_board(int row, int col, int val)
+std::optional<SudokuBoard> SudokuBoard::fill_board(int row, int col)
 {
-    return SudokuBoard(*this);
+
+    int next_col = (col + 1) % 9;
+    int next_row = next_col == 0 ? row + 1 : row;
+
+    if (next_row == 9)
+    {
+        std::cout << "Reached the end" << std::endl;
+        return *this;
+    }
+
+    for (int i = 1; i < 10; i++)
+    {
+        auto new_board = this->insert(row, col, i);
+        if (new_board.is_valid(row, col))
+        {
+            std::cout << "New board: " << std::endl
+                      << new_board << std::endl;
+            auto solution = new_board.fill_board(next_row, next_col);
+            if (solution.has_value())
+            {
+                return solution.value();
+            }
+            else
+            {
+                std::cout << "Found no solution for board[" << row << "][" << col << "] = " << i << std::endl;
+            }
+        }
+    }
+
+    std::cout << "Returning nothing" << std::endl;
+    return {};
 }
 
 bool SudokuBoard::is_valid(int row, int col)
@@ -140,19 +172,13 @@ SudokuBoard SudokuBoard::insert(int row, int col, int val)
 
 int main()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    rng.seed(seed);
-    // SudokuBoard sudoku;
-    // sudoku.insert_first_row();
-    // std::cout << "Content of Sudoku board:" << std::endl;
-    // std::cout << sudoku << std::endl;
-    std::vector<std::vector<int>> x{9, std::vector<int>(9, 0)};
-
     SudokuBoard board;
     board = board.insert_first_row().fill_board();
 
-    SudokuBoard board2 = board.insert(1, 0, 9);
+    auto board2 = board.fill_board(1, 0);
 
-    std::cout << board2;
-    std::cout << board2.is_valid(1, 0) << std::endl;
+    if (board2.has_value())
+    {
+        std::cout << board2.value();
+    }
 }
