@@ -34,7 +34,7 @@ private:
     GridOfInts board;
 };
 
-SudokuBoard::SudokuBoard() : board(GridOfInts{9, RowOfInts(9, 0)}){};
+SudokuBoard::SudokuBoard() : board(GridOfInts{ROWS, RowOfInts(COLUMNS, 0)}){};
 
 SudokuBoard::SudokuBoard(GridOfInts &board) : board{board}
 {
@@ -68,10 +68,10 @@ SudokuBoard SudokuBoard::fill_board()
 std::optional<SudokuBoard> SudokuBoard::fill_board(int row, int col)
 {
 
-    int next_col = (col + 1) % 9;
+    int next_col = (col + 1) % COLUMNS;
     int next_row = next_col == 0 ? row + 1 : row;
 
-    if (next_row == 9)
+    if (next_row == ROWS)
     {
         std::cout << "Reached the end" << std::endl;
         return *this;
@@ -106,7 +106,7 @@ bool SudokuBoard::is_valid(int row, int col)
 
     assert(value_to_check != 0);
 
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < ROWS; i++)
     {
         if (i != row)
         // check for duplicates in the same column
