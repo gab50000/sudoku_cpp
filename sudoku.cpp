@@ -173,7 +173,7 @@ SudokuBoard SudokuBoard::insert(int row, int col, int val)
 int main()
 {
     SudokuBoard board;
-    board = board.insert_first_row().fill_board();
+    board = board.insert_first_row();
 
     auto solution = board.fill_board(1, 0);
 
