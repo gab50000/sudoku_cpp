@@ -20,9 +20,9 @@ class SudokuBoard
 
 public:
     SudokuBoard();
-    SudokuBoard(GridOfInts &board);
+    SudokuBoard(const GridOfInts &board);
     SudokuBoard insert_first_row();
-    SudokuBoard insert_first_row(RowOfInts &row);
+    SudokuBoard insert_first_row(const RowOfInts &row);
     SudokuBoard insert(int row, int col, int val);
     SudokuBoard fill_board();
     std::optional<SudokuBoard> fill_board(int row, int col);
@@ -36,7 +36,7 @@ private:
 
 SudokuBoard::SudokuBoard() : board(GridOfInts{ROWS, RowOfInts(COLUMNS, 0)}){};
 
-SudokuBoard::SudokuBoard(GridOfInts &board) : board{board}
+SudokuBoard::SudokuBoard(const GridOfInts &board) : board{board}
 {
 }
 
@@ -52,7 +52,7 @@ SudokuBoard SudokuBoard::insert_first_row()
     return insert_first_row(row);
 }
 
-SudokuBoard SudokuBoard::insert_first_row(RowOfInts &row)
+SudokuBoard SudokuBoard::insert_first_row(const RowOfInts &row)
 {
     auto new_board{board};
     new_board[0] = row;
