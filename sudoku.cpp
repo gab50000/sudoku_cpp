@@ -172,6 +172,9 @@ SudokuBoard SudokuBoard::insert(int row, int col, int val)
 
 int main()
 {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    rng.seed(seed);
+
     SudokuBoard board;
     board = board.insert_first_row();
 
