@@ -126,8 +126,8 @@ bool SudokuBoard::is_valid(int row, int col)
         }
     }
 
-    int m = row / 3;
-    int n = col / 3;
+    int m = (row / 3) * 3;
+    int n = (col / 3) * 3;
 
     for (int i = 0; i < 3; i++)
     {
@@ -172,18 +172,13 @@ SudokuBoard SudokuBoard::insert(int row, int col, int val)
 
 int main()
 {
-    // SudokuBoard board;
-    // board = board.insert_first_row().fill_board();
+    SudokuBoard board;
+    board = board.insert_first_row().fill_board();
 
-    // auto board2 = board.fill_board(1, 0);
+    auto board2 = board.fill_board(1, 0);
 
-    // if (board2.has_value())
-    // {
-    //     std::cout << board2.value();
-    // }
-
-    for (int i = 0; i < 9; i++)
+    if (board2.has_value())
     {
-        std::cout << i / 3 << std::endl;
+        std::cout << board2.value();
     }
 }
