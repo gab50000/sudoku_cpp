@@ -71,12 +71,6 @@ std::optional<SudokuBoard> SudokuBoard::fill_board(int row, int col)
     int next_col = (col + 1) % COLUMNS;
     int next_row = next_col == 0 ? row + 1 : row;
 
-    if (next_row == ROWS)
-    {
-        std::cout << "Reached the end" << std::endl;
-        return *this;
-    }
-
     for (int i = 1; i < 10; i++)
     {
         auto new_board = this->insert(row, col, i);
@@ -84,6 +78,14 @@ std::optional<SudokuBoard> SudokuBoard::fill_board(int row, int col)
         {
             std::cout << "New board: " << std::endl
                       << new_board << std::endl;
+
+            // Check if we reached the end
+            if (next_row == ROWS)
+            {
+                std::cout << "Reached the end" << std::endl;
+                return new_board;
+            }
+
             auto solution = new_board.fill_board(next_row, next_col);
             if (solution.has_value())
             {
