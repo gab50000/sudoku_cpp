@@ -7,32 +7,12 @@
 #include <assert.h>
 #include <optional>
 
+#include "sudoku.hpp"
+
 #define ROWS 9
 #define COLUMNS 9
 
 std::default_random_engine rng;
-
-typedef std::vector<std::vector<int>> GridOfInts;
-typedef std::vector<int> RowOfInts;
-
-class SudokuBoard
-{
-
-public:
-    SudokuBoard();
-    SudokuBoard(const GridOfInts &board);
-    SudokuBoard insert_first_row();
-    SudokuBoard insert_first_row(const RowOfInts &row);
-    SudokuBoard insert(int row, int col, int val);
-    SudokuBoard fill_board();
-    std::optional<SudokuBoard> fill_board(int row, int col);
-    bool is_valid(int row, int col);
-
-    friend std::ostream &operator<<(std::ostream &os, const SudokuBoard &obj);
-
-private:
-    GridOfInts board;
-};
 
 SudokuBoard::SudokuBoard() : board(GridOfInts{ROWS, RowOfInts(COLUMNS, 0)}){};
 
@@ -172,7 +152,7 @@ SudokuBoard SudokuBoard::insert(int row, int col, int val)
     return SudokuBoard(new_board);
 }
 
-int main()
+int main(int argc, char **argv)
 {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     rng.seed(seed);
@@ -186,4 +166,6 @@ int main()
     {
         std::cout << solution.value();
     }
+
+    return 0;
 }
